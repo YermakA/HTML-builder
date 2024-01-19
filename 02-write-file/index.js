@@ -12,7 +12,7 @@ process.stdin.on('data', (data) => {
   }
 });
 
-stream.on('SIDINT', () => sayBye);
+process.on('SIGINT', sayBye);
 
 function sayBye() {
   process.stdout.write('\nBye!\n');
