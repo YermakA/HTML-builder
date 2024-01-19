@@ -1,13 +1,20 @@
 const fs = require('fs');
 const path = require('path');
-const process = require('process');
-const stream = new fs.ReadStream(path.join(__dirname, 'text.txt'), {
-  encoding: 'utf-8',
+
+const stream = fs.createWriteStream(path.join(__dirname, 'text.txt'));
+process.stdout.write('Have a nice day! Please enter anything...\n');
+
+process.stdin.on('data', (data) => {
+  if (data.toString().trim() !== 'exit') {
+    stream.write(data);
+  } else {
+    sayBye();
+  }
 });
 
-if (stream) {
-  stream.on('readable', function () {
-    let chunk = stream.read();
-    if (chunk !== null) process.stdout.write(chunk.toString());
-  });
+stream.on('SIDINT', () => sayBye);
+
+function sayBye() {
+  process.stdout.write('\nBye!\n');
+  process.exit();
 }
