@@ -1,9 +1,12 @@
-const { readdir, readFile, writeFile } = require('fs/promises');
+const { readdir, readFile, writeFile, rm } = require('fs/promises');
 const path = require('path');
 
-async function getFiles() {
+async function getStyles() {
   const files = await readdir(path.join(__dirname, 'styles'));
-
+  await rm(path.join(__dirname, 'project-dist', 'bundle.css'), {
+    recursive: true,
+    force: true,
+  });
   let filesContent = '';
   for (const file of files) {
     if (path.extname(file) == '.css') {
@@ -13,4 +16,4 @@ async function getFiles() {
   }
   writeFile(path.join(__dirname, 'project-dist', 'bundle.css'), filesContent);
 }
-getFiles();
+getStyles();
