@@ -75,7 +75,7 @@ async function createFiles(baseDirectory, src) {
 
 async function copyDirectory() {
   try {
-    const baseDirectory = path.join(__dirname + '\\project-dist\\assets');
+    const baseDirectory = path.join(__dirname, 'project-dist', 'assets');
     const src = path.join(__dirname, 'assets');
     await createFiles(baseDirectory, src);
   } catch (err) {
